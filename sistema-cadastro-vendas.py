@@ -13,6 +13,7 @@ motos = [
     {'Fabricante': 'Yamaha', 'Modelo': 'Fazer 250', 'Ano': '2022', 'Preço': 15000.00},
     {'Fabricante': 'Kawasaki', 'Modelo': 'Ninja 400', 'Ano': '2020', 'Preço': 34690.00}
 ]
+
 vendas = []
 
 linha()
@@ -27,25 +28,29 @@ while True:
 # =============================== ACESSANDO REGISTROS =================================================
     elif action in 'rR':
         while True:
-            print('(C) Exibir Clientes | (M) Exibir Motocicletas | (L) Exibir Vendas  (R) Retornar')
+            print('(C) Exibir Clientes | (M) Exibir Motocicletas | (R) Retornar')
             res = str(input())  # recebe a resposta
         # ======================= CASO NULO ===============================
             if len(res) == 0:
                 print('Opção inválida!')
         # ==================== CASO CLIENTES ============================
             elif res in 'cC':
-                listarClientes(clientes)
-                linha()
-                crud(clientes, motos)
+                try:
+                    listarClientes(clientes)
+                    linha()
+                    crud(clientes, motos)
+                except:
+                    print('>>Ainda não há registros!<<')     
+                    pass    
         # ==================== CASO MOTOS ============================
             elif res in 'mM':
-                listarMotos(motos)
-                linha()
-                crud(clientes, motos)
-        # =================== CASO VENDAS ============================
-            elif res in 'lL':
-                listarVendas(vendas)
-                linha()
+                try:
+                    listarMotos(motos)
+                    linha()
+                    crud(clientes, motos)
+                except:
+                    print('>>Ainda não há registros!<<')     
+                    pass    
         # =================== CASO RETORNAR ==========================
             elif res in 'rR':
                 break
@@ -57,14 +62,24 @@ while True:
 # =============================== ACESSANDO VENDAS =================================================
     elif action in 'vV':
         while True:
-            print('(E) Efetuar uma venda | (B) Buscar uma venda | (R) Retornar à Seção Anterior')
+            print('(V) Listar Vendas | (E) Efetuar uma venda | (B) Buscar uma venda | (R) Retornar à Seção Anterior')
             res = str(input())
 
             # ======================= CASO NULO ===============================
             if len(res) == 0:
                 print('Opção inválida!')
-                
+            # =================== CASO VENDAS ============================
+            elif res in 'vV':
+                try:
+                    listarVendas(vendas)
+                    linha()
+                except:
+                    print('>>Ainda não há registros!<<')     
+                    pass
+            # =================== CASO EFETUAR VENDAS ====================        
             elif res in 'eE':
+                listarClientes(clientes)
+                listarMotos(motos)
             # RECEBE ÍNDICE DO CLIENTE DA OPERAÇÃO
                 ncliente = str(input('Digite o nome do cliente que comprará a motocicleta: '))
                 ic = next((i for i, x in enumerate(clientes) if x["Nome"] == ncliente), None)
@@ -104,7 +119,7 @@ while True:
             if res in 'bB':
                 modelo = str(input('Informe o modelo da motocicleta: '))
                 cliente = str(input('Informe o nome do cliente:'))
-                print(next((x for x in vendas if (x["Modelo"] == modelo) and (x["Cliente"] == cliente)), None))
+                print(next((x for x in vendas if (x["Modelo"] == modelo) and (x["Cliente"] == cliente)), 'Nenhum registro encontrado'))
         # ======================== CASO RETORNAR =========================================
             elif res in 'rR':
                 break

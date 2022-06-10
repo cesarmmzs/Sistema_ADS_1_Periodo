@@ -51,7 +51,7 @@ def listarVendas(a):
     linha()
     print('\t\t\t\t\tVENDAS')
     linha()
-    n = 'Nº do Registro'
+    n = 'Nº da Venda'
     print(f'{n: <15}', end='')
     for k in a[0].keys():
         print(f'{k: >15}', end='')
